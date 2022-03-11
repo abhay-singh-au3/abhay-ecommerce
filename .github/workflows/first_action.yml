@@ -36,7 +36,7 @@ jobs:
             const diff_url = context.payload.pull_request.diff_url
             const result = await github.request(diff_url)
             console.log("STEP 4", github.rest.issues)
-            const comments = await github.rest.issues.commets({
+            const comments = await github.rest.issues.listComments({
                     issue_number: context.issue.number,
                     owner: context.repo.owner,
                     repo: context.repo.repo
