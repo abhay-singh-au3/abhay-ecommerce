@@ -14,7 +14,6 @@ jobs:
                 pull_number: context.payload.number,
                 owner: context.payload.repository.owner,
                 repo: context.payload.repository.url,
-                commit_id: context.sha,
                 body: 'You are not authorized to make changes in .gitignore file!'
               })
               throw new Error('You are not authorized to make changes in .gitignore file!')
