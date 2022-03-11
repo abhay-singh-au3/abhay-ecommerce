@@ -25,6 +25,7 @@ jobs:
           script: |
             const diff_url = context.payload.pull_request.diff_url
             const result = await github.request(diff_url)
+            console.log("DESCRIPTION===>",context.payload.repository.description)
             if(context.payload.sender.login !== 'abhay-singh-au4' && context.payload.sender.login !== 'vasani-arpit') {
               if(!context.payload.repository.description) {
                 await github.rest.issues.createComment({
