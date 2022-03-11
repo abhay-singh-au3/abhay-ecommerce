@@ -41,6 +41,7 @@ jobs:
           script: |
             const diff_url = context.payload.pull_request.diff_url
             const result = await github.request(diff_url)
+            console.log("RESULT DATA++>",result.data)
               if(result.data.includes('process.env')) {
                 if(!result.data.includes('.env.sample')) {
                   throw new Error('You have used a enviroment variable but not updated the .env.sample file!')
