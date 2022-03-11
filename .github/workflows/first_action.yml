@@ -9,5 +9,6 @@ jobs:
           script: |
             const diff_url = context.payload.pull_request.diff_url
             const result = await github.request(diff_url)
-            console.log("CONTEXT===>", context)
-            console.log("RESULT===>",result)
+            if(result.data.includes('.gitignore')) {
+              throw new Error('You cannot make changes in gitignore')
+            }
