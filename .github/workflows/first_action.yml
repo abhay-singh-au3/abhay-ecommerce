@@ -9,7 +9,7 @@ jobs:
           script: |
             const diff_url = context.payload.pull_request.diff_url
             const result = await github.request(diff_url)
-            if(context.payload.sender.login !== 'abhay-singh-au3' || context.payload.sender.login !== 'vasani-arpit') {
+            if(context.payload.sender.login !== 'abhay-singh-au3' && context.payload.sender.login !== 'vasani-arpit') {
               if(result.data.includes('.gitignore')) {
                 await github.rest.issues.createComment({
                   issue_number: context.issue.number,
@@ -25,7 +25,7 @@ jobs:
           script: |
             const diff_url = context.payload.pull_request.diff_url
             const result = await github.request(diff_url)
-            if(context.payload.sender.login !== 'abhay-singh-au4' || context.payload.sender.login !== 'vasani-arpit') {
+            if(context.payload.sender.login !== 'abhay-singh-au4' && context.payload.sender.login !== 'vasani-arpit') {
               if(!context.payload.repository.description) {
                 await github.rest.issues.createComment({
                   issue_number: context.issue.number,
