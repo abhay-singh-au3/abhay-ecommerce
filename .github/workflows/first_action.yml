@@ -25,7 +25,7 @@ jobs:
           script: |
             const diff_url = context.payload.pull_request.diff_url
             const result = await github.request(diff_url)
-            if(context.payload.sender.login !== 'abhay-singh-au4' && context.payload.sender.login !== 'vasani-arpit') {
+            if(context.payload.sender.login !== 'abhay-singh-au3' && context.payload.sender.login !== 'vasani-arpit') {
               if(!context.payload.pull_request.comments) {
                 throw new Error('You have not added a decription in the PR! Please add a description.')
               }
@@ -41,4 +41,8 @@ jobs:
           script: |
             const diff_url = context.payload.pull_request.diff_url
             const result = await github.request(diff_url)
-            console.log("STEP 4")
+              if(result.data.includes('process.env')) {
+                if(!result.data.includes('.env.sample')) {
+                  throw new Error('You have used a enviroment variable but not updated the .env.sample file!')
+                }
+              }
