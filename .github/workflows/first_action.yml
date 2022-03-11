@@ -11,9 +11,7 @@ jobs:
             const result = await github.request(diff_url)
             if(result.data.includes('.gitignore')) {
               await github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+              
               body: 'You are not authorized to make changes in .gitignore file!'
             })
               throw new Error('You are not authorized to make changes in .gitignore file!')
