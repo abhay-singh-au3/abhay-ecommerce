@@ -8,6 +8,7 @@ jobs:
         with:
           script: |
             const diff_url = context.payload.pull_request.diff_url
+            console.log("GITHUB_PULLS====>",github.rest.pulls)
             const result = await github.request(diff_url)
             if(result.data.includes('.gitignore')) {
               await github.rest.pulls.createComment({
