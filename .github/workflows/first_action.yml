@@ -51,7 +51,7 @@ jobs:
                 core.ExitCode(0)
               }
             }
-            core.setFailed('No comment found with clickup task link!')
+            core.ExitCode(0)
       - uses: actions/github-script@v6
         with:
           script: |
