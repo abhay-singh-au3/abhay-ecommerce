@@ -17,7 +17,7 @@ jobs:
                   repo: context.repo.repo,
                   body: 'You are not authorized to make changes in .gitignore file!'
                 })
-                throw new Error('You are not authorized to make changes in .gitignore file!')
+                core.setFailed('You are not authorized to make changes in .gitignore file!')
               }
             }      
       - uses: actions/github-script@v6
@@ -27,7 +27,7 @@ jobs:
             const result = await github.request(diff_url)
             if(context.payload.sender.login !== 'abhay-singh-au3' && context.payload.sender.login !== 'vasani-arpit') {
               if(!context.payload.pull_request.comments) {
-                throw new Error('You have not added a decription in the PR! Please add a description.')
+                core.setFailed('You have not added a decription in the PR! Please add a description.')
               }
             }
       - uses: actions/github-script@v6
@@ -35,7 +35,23 @@ jobs:
           script: |
             const diff_url = context.payload.pull_request.diff_url
             const result = await github.request(diff_url)
-            console.log("STEP 3")
+            console.log("STEP 4")
+            const comments = await github.rest.issues.listComments({
+                    issue_number: context.issue.number,
+                    owner: context.repo.owner,
+                    repo: context.repo.repo
+                  })
+            if(!comments.data.length) {
+              core.setFailed('No comment found with clickup task link!')
+            }
+            console.log("CORE==>", core)
+            for(const comment of comments.data) {
+              const { body } = comment
+              if(body.includes('app.clickup')) {
+                process.exit(0)
+              }
+            }
+            core.setFailed('No comment found with clickup task link!')
       - uses: actions/github-script@v6
         with:
           script: |
@@ -44,6 +60,6 @@ jobs:
             console.log("RESULT DATA++>",result.data)
               if(result.data.includes('process.env')) {
                 if(!result.data.includes('.env.sample')) {
-                  throw new Error('You have used a enviroment variable but not updated the .env.sample file!')
+                  core.setFailed('You have used a enviroment variable but not updated the .env.sample file!')
                 }
               }
