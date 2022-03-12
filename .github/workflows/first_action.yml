@@ -51,7 +51,7 @@ jobs:
                 core.ExitCode(0)
               }
             }
-            core.ExitCode(0)
+            process.exit(0)
       - uses: actions/github-script@v6
         with:
           script: |
