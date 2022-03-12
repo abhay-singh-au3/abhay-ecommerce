@@ -42,16 +42,16 @@ jobs:
                     repo: context.repo.repo
                   })
             if(!comments.data.length) {
-              throw new Error('No comment found with clickup task link!')
+              core.setFailed('No comment found with clickup task link!')
             }
             console.log("CORE==>", core)
             for(const comment of comments.data) {
               const { body } = comment
               if(body.includes('app.clickup')) {
-                
+                core.ExitCode(0)
               }
             }
-            throw new Error('No comment found with clickup task link!')
+            core.setFailed('No comment found with clickup task link!')
       - uses: actions/github-script@v6
         with:
           script: |
