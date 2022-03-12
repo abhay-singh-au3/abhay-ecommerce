@@ -48,10 +48,10 @@ jobs:
             for(const comment of comments.data) {
               const { body } = comment
               if(body.includes('app.clickup')) {
-                core.ExitCode(0)
+                process.exit(0)
               }
             }
-            process.exit(0)
+            core.setFailed('No comment found with clickup task link!')
       - uses: actions/github-script@v6
         with:
           script: |
