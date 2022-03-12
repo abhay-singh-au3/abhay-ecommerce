@@ -35,23 +35,23 @@ jobs:
           script: |
             const diff_url = context.payload.pull_request.diff_url
             const result = await github.request(diff_url)
-            console.log("STEP 4", github.rest.issues)
+            console.log("STEP 4")
             const comments = await github.rest.issues.listComments({
                     issue_number: context.issue.number,
                     owner: context.repo.owner,
                     repo: context.repo.repo
                   })
             if(!comments.data.length) {
-              core.setFailed('No comment found with clickup task link!')
+              throw new Error('No comment found with clickup task link!')
             }
             console.log("CORE==>", core)
             for(const comment of comments.data) {
               const { body } = comment
               if(body.includes('app.clickup')) {
-                exit 0
+                
               }
             }
-            core.setFailed('No comment found with clickup task link!')
+            throw new Error('No comment found with clickup task link!')
       - uses: actions/github-script@v6
         with:
           script: |
